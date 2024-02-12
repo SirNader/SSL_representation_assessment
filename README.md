@@ -2,6 +2,10 @@
 
 Python implementation of methods [RankMe](https://arxiv.org/abs/2210.02885), [α-ReQ](https://openreview.net/forum?id=ii9X4vtZGTZ) and [Cluster Learnability](https://arxiv.org/abs/2206.01251)
 
+
+`pip install requirements -r`
+
+`python main.py --val_dataset=path/to/val/dataset --model=path/to/model/checkpoint`
 # Pretrained Checkpoints that were used
 
 
