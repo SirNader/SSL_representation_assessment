@@ -3,7 +3,7 @@ import argparse
 from torchvision import transforms, datasets
 import torch.utils.data as data
 from models.vit.masked_encoder import MaskedEncoder
-from modules import RankMe, fit_powerlaw, ClusteringAnalyzer
+from metrics import RankMe, fit_powerlaw, ClusteringAnalyzer
 from tqdm import tqdm
 import numpy as np
 
