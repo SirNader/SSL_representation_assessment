@@ -3,8 +3,9 @@ import argparse
 from torchvision import transforms, datasets
 import torch.utils.data as data
 from models.vit.masked_encoder import MaskedEncoder
-from modules import RankMe, fit_powerlaw
+from modules import RankMe, fit_powerlaw, ClusteringAnalyzer
 from tqdm import tqdm
+import numpy as np
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -77,6 +78,8 @@ if __name__ == "__main__":
     
     val_data = datasets.ImageFolder(root=VAL_PATH, transform=TRANSFORM_IMG)
     val_data_loader = data.DataLoader(val_data, batch_size=BATCH_SIZE, shuffle=True,  num_workers=8)
+    num_samples = len(val_data)
+    
     model, embed_dim = load_model(args.model)
     
     cov, embeddings, labels = extract_features(model, val_data_loader, embed_dim)
@@ -88,3 +91,7 @@ if __name__ == "__main__":
     print(f"RankMe: {embeddings_rank}")
     print("[INFO] Calculating Eigenspectrum decay")
     print(f'Eigenspectrum decay α: {alpha}')
+    
+    CA = ClusteringAnalyzer(int(np.sqrt(num_samples)),embeddings.cpu().numpy())
+    print("[INFO] Calculating Cluster Learnability")
+    print("Cluster Learnability: " , CA.compute_cluster_learnability())
